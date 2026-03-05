@@ -114,28 +114,6 @@ Canny edge detection
 
 applied directly to compressed images.
 
-Project Structure
-pix2pix-edge-reconstruction
-│
-├── prepare_dataset.py
-│   Dataset preprocessing and preparation
-│
-├── generate_canny_edge.py
-│   Generation of reference edge maps using Canny algorithm
-│
-├── conversions.py
-│   Image preprocessing utilities
-│
-├── s2a_x57_005_11_tgd.py
-│   Pix2Pix generator implementation (U-Net)
-│
-├── s2a_x57_005_12_vgd.py
-│   Pix2Pix discriminator implementation (PatchGAN)
-│
-├── requirements.txt
-│   Python dependencies
-│
-└── README.md
 Technologies
 
 Python
@@ -161,3 +139,4 @@ Kacper Dworczak
 Engineering Thesis
 Electronics and Telecommunications
 Poznan University of Technology
+
