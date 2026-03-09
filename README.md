@@ -58,6 +58,20 @@ The model was evaluated using several quantitative metrics:
 Results show that the Pix2Pix model can reconstruct meaningful edge structures even when compression artifacts significantly degrade image quality.
 
 ---
+## Results
+
+Example comparison of the reconstruction pipeline.
+
+From left to right:
+
+- Compressed input image  
+- Ground truth edge map  
+- Edge detection using classical method (Canny)  
+- Edge reconstruction using Pix2Pix GAN
+
+![Edge reconstruction comparison](results/comparison.png)
+
+---
 
 # Technologies Used
 
@@ -76,5 +90,6 @@ Results show that the Pix2Pix model can reconstruct meaningful edge structures e
 - Image-to-image translation
 - Computer Vision
 - Edge detection
+
 
 
