@@ -1,142 +1,80 @@
+# Edge Recovery in Compressed Images using Pix2Pix GAN
+### (Rekonstrukcja krawędzi w obrazach kompresowanych stratnie przy użyciu sieci cGAN)
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15-orange)
+![Type](https://img.shields.io/badge/Project-Engineering%20Thesis-green)
+
+##  Abstract / Streszczenie
+English: This project focuses on the detection and reconstruction of edges in images with reduced quality due to lossy compression. Compression artifacts significantly degrade the performance of traditional edge detection methods, such as the Canny algorithm. To address this, a Deep Learning approach using a Pix2Pix GAN (Conditional Generative Adversarial Network) was implemented.
+
+The model consists of a U-Net generator with skip connections to preserve spatial information and a PatchGAN discriminator to ensure sharp details. The network was trained to map compressed images (with artifacts) to clean edge maps, using the COCO dataset. Quantitative analysis (PSNR, SSIM, Boundary F1 Score, ERC) demonstrates that the proposed model effectively learns edge representation robust to compression artifacts, outperforming classical methods in high-compression scenarios.
+
+Polski: Projekt koncentruje się na problemie detekcji i rekonstrukcji krawędzi w obrazach o obniżonej jakości, wynikającej z kompresji stratnej. Artefakty powstające podczas kompresji w znacznym stopniu pogarszają działanie tradycyjnych metod, takich jak algorytm Canny'ego. W ramach projektu wykorzystano model Pix2Pix, będący odmianą warunkowej sieci przeciwstawnej (cGAN).
+
+Architektura modelu składa się z generatora typu U-Net oraz dyskryminatora PatchGAN. Model uczono transformacji obrazów po kompresji stratnej do map krawędzi. Skuteczność oceniono przy użyciu metryk PSNR, SSIM, Boundary F1 Score oraz współczynnika ERC. Wyniki wskazują, że model Pix2Pix potrafi skutecznie odtworzyć krawędzie nawet przy silnej degradacji obrazu.
 Pix2Pix Edge Reconstruction after Lossy Compression
 
-Implementation of a Pix2Pix conditional GAN model for reconstruction of edge maps from images degraded by lossy compression.
+# Model Architecture
 
-The project was developed as part of an engineering thesis in Electronics and Telecommunications at Poznan University of Technology.
+The implemented architecture consists of two neural networks:
 
-The goal of the project is to investigate whether deep learning models can reconstruct structural information (edges) lost during compression better than classical edge detection algorithms.
+### Generator
+- **U-Net architecture**
+- skip connections to preserve spatial information
+- generates edge maps from compressed images
 
-Project Motivation
+### Discriminator
+- **PatchGAN discriminator**
+- evaluates realism of local image patches
+- encourages generation of sharper edges
 
-Lossy compression algorithms remove information from images in order to reduce data size.
-As a result, structural details such as edges become degraded, which significantly reduces the effectiveness of classical edge detection methods.
+This adversarial setup allows the model to reconstruct high-quality edge structures even under strong compression artifacts.
 
-Traditional methods such as Canny edge detection rely on local gradient analysis and perform well on high-quality images but struggle when compression artifacts are present.
+---
 
-This project explores whether a conditional generative adversarial network (Pix2Pix) can learn the relationship between compressed images and their corresponding edge maps and reconstruct edge information more effectively.
+# Dataset
 
-Method Overview
+Training data was prepared using the **COCO dataset**.
 
-The project uses the Pix2Pix architecture, a conditional GAN designed for image-to-image translation.
+Dataset pipeline:
 
-The network learns to transform:
+1. Original images
+2. Apply **lossy compression**
+3. Generate **ground truth edge maps** using the Canny detector
+4. Train Pix2Pix to learn the mapping between compressed images and clean edges
 
-compressed image  →  reconstructed edge map
-Architecture
+---
 
-The model consists of two neural networks:
+# Evaluation Metrics
 
-Generator
+The model was evaluated using several quantitative metrics:
 
-U-Net architecture
+- **PSNR (Peak Signal-to-Noise Ratio)**
+- **SSIM (Structural Similarity Index)**
+- **Boundary F1 Score**
+- **Edge Reconstruction Coefficient (ERC)**
 
-encoder–decoder structure
+Results show that the Pix2Pix model can reconstruct meaningful edge structures even when compression artifacts significantly degrade image quality.
 
-skip connections for preserving spatial information
+---
 
-Discriminator
+# Technologies Used
 
-PatchGAN discriminator
+- Python
+- TensorFlow
+- OpenCV
+- NumPy
+- COCO Dataset
 
-evaluates local image patches instead of the whole image
+---
 
-encourages structural consistency in generated edge maps
+# Key Concepts
 
-Dataset Preparation
+- Conditional GAN (cGAN)
+- Pix2Pix architecture
+- Image-to-image translation
+- Computer Vision
+- Edge detection
 
-The training pipeline consists of several preprocessing steps.
-
-1. Image compression
-
-Original images are compressed using the VVC (Versatile Video Coding) codec.
-
-Different compression levels are used by varying the quantization parameter (QP):
-
-QP = 22, 27, 32, 37, 42, 47, 52, 57
-
-This allows evaluation of the model under different levels of degradation.
-
-2. Edge map generation
-
-Reference edge maps are generated using the Canny edge detector.
-
-These edge maps serve as ground truth targets during training.
-
-3. Dataset pairing
-
-Each training sample consists of:
-
-Input  → compressed image
-Target → reference edge map
-
-These pairs are used to train the Pix2Pix model.
-
-Training
-
-The model is trained using a combination of two loss functions:
-
-Adversarial Loss
-
-Encourages the generator to produce edge maps that look realistic to the discriminator.
-
-Reconstruction Loss (L1)
-
-Ensures structural similarity between generated and reference edge maps.
-
-The training process involves approximately:
-
-~800,000 training iterations
-
-Training is performed on image patches of size:
-
-128 × 128 pixels
-Evaluation
-
-Model performance is evaluated using both visual and quantitative analysis.
-
-Quantitative metrics
-
-PSNR (Peak Signal-to-Noise Ratio)
-
-SSIM (Structural Similarity Index)
-
-Precision
-
-Recall
-
-F1 Score
-
-Baseline comparison
-
-The results produced by the Pix2Pix model are compared with:
-
-Canny edge detection
-
-applied directly to compressed images.
-
-Technologies
-
-Python
-
-Deep Learning
-
-Computer Vision
-
-Conditional GAN (Pix2Pix)
-
-U-Net architecture
-
-PatchGAN discriminator
-
-Results
-
-The experiments demonstrate that deep learning models can reconstruct edge structures in compressed images more effectively than classical gradient-based detectors in scenarios with strong compression artifacts.
-
-Author
-
-Kacper Dworczak
-
-Engineering Thesis
-Electronics and Telecommunications
-Poznan University of Technology
 
